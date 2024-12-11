@@ -1,0 +1,48 @@
+html,
+body,
+#root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: sans-serif;
+}
+
+
+.app-container {
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    height: 100vh;
+}
+
+.top-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #333;
+    color: #fff;
+    padding: 0 1rem;
+}
+
+.app-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.content-area {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+}
+
+.left-menu {
+    background: #eee;
+    padding: 1rem;
+}
+
+.left-menu h2 {
+    margin-top: 0;
+}
+
+
+.shape-viewport {
+    background: #fff;
+}
