@@ -27,7 +27,7 @@ function TopToolbar({ fileName, onFileOpen }) {
         ref={fileInputRef}
         style={{ display: 'none' }}
         onChange={handleFileChange}
-        accept=".txt,.shape"
+        accept=".shapefile"
       />
     </div>
   );

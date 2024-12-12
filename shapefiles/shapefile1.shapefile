@@ -1,0 +1,8 @@
+// Rectangle 1: Red rectangle at (0,0), z=0, size=50x50, color=red (#ff0000)
+Rectangle, 0, 0, 0, 50, 50, ff0000;
+
+// Rectangle 2: Green rectangle at (70,70), z=1, size=100x200, color=green (#00ff00)
+Rectangle, 70, 70, 1, 100, 200, 00ff00;
+
+// Triangle 1: Blue triangle with vertices at (10,10), (60,10), (35,50), z=2, color=blue (#0000ff)
+Triangle, 10, 10, 60, 10, 35, 50, 2, 0000ff;
