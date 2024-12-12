@@ -6,3 +6,6 @@ Rectangle, 70, 70, 1, 100, 200, 00ff00;
 
 // Triangle 1: Blue triangle with vertices at (10,10), (60,10), (35,50), z=2, color=blue (#0000ff)
 Triangle, 10, 10, 60, 10, 35, 50, 2, 0000ff;
+
+// Polygon 1: A blue (#0000ff) polygon of four vertices forming a quadrilateral.
+Polygon, 2, 0000ff, 50,50, 100,50, 120,100, 60,110;

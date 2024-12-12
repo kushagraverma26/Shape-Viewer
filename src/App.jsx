@@ -3,10 +3,17 @@ import TopToolbar from './components/TopToolbar.jsx';
 import LeftMenu from './components/LeftMenu.jsx';
 import ShapeViewport from './components/ShapeViewport.jsx';
 
-function App() {
-  const [fileName, setFileName] = useState(null);
+import { parseShapesFromText } from './utils/parser.js';
 
-  const handleFileOpen = (file) => {
+function App() {
+  const [shapes, setShapes] = useState([]);
+  const [fileName, setFileName] = useState(null);
+  const [renderMode, setRenderMode] = useState('canvas');
+
+  const handleFileOpen = async (file) => {
+    const text = await file.text();
+    const parsedShapes = parseShapesFromText(text);
+    setShapes(parsedShapes);
     setFileName(file.name);
   };
 
@@ -14,8 +21,10 @@ function App() {
     <div className="app-container">
       <TopToolbar fileName={fileName} onFileOpen={handleFileOpen} />
       <div className="content-area">
-        <LeftMenu onFileOpen={handleFileOpen} />
-        <ShapeViewport />
+        <LeftMenu onFileOpen={handleFileOpen} 
+          onChangeRenderMode={mode => setRenderMode(mode)}
+        />
+        <ShapeViewport shapes={shapes} renderMode={renderMode} />
       </div>
     </div>
   );
