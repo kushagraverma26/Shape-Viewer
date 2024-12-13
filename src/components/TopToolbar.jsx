@@ -22,6 +22,7 @@ function TopToolbar({ fileName, onFileOpen }) {
       ) : (
         <button onClick={handleButtonClick}>Open Shape File</button>
       )}
+      {/* Hidden. Button + ref used to upload file. */}
       <input
         type="file"
         ref={fileInputRef}
