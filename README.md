@@ -63,3 +63,25 @@ Once the file is loaded, shapes appear in the viewport according to their parame
 
 **Switching Render Modes:**  
 Use the left menu to switch between "Canvas" and "WebGL" rendering modes. Canvas supports shape translation. Drag and drop shapes to rearrange them. You can also save the translated shapes into a shapefile of your own.
+
+
+## Additional information:
+
+
+**How many assignment iterations did you complete?**  
+5 out of 5  
+
+**Did you implement any bonus features/extra features? Which ones?**  
+Shape translation  
+
+**Are there any major known problems with the solution?**  
+No major issues. WebGL does not support translation for now.
+
+## References:
+
+https://www.geeksforgeeks.org/how-to-add-2d-content-to-a-webgl-context/
+
+https://dannywoodz.wordpress.com/2014/11/18/webgl-drawing-a-2d-shape/
+
+https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial
+

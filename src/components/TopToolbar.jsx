@@ -7,12 +7,13 @@ function TopToolbar({ fileName, onFileOpen }) {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
+   // File upload
+   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      onFileOpen(file);
-    }
-  };
+    if (!file) return;
+    const text = await file.text();
+    onFileOpen(file, text);
+};
 
   return (
     <div className="top-toolbar">

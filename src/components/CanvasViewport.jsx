@@ -5,12 +5,14 @@ function CanvasViewport({ shapes, onShapesChange }) {
   const [dragging, setDragging] = useState(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasRef.current; 
     const ctx = canvas.getContext('2d');
 
+    // Resizing the canvas to match the container
     canvas.width = canvas.parentElement.clientWidth;
     canvas.height = canvas.parentElement.clientHeight;
 
+    // Clearing the drawing area
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (const shape of shapes) {
@@ -141,6 +143,7 @@ function isPointInShape(shape, x, y) {
   return false;
 }
 
+// Using area compression. If area of three triangles(breaking them at px, py) is same then point is in triangle
 function pointInTriangle(px, py, x1, y1, x2, y2, x3, y3) {
   const areaOrig = Math.abs((x2 - x1)*(y3 - y1) - (x3 - x1)*(y2 - y1));
   const area1 = Math.abs((x1 - px)*(y2 - py) - (x2 - px)*(y1 - py));
@@ -149,6 +152,7 @@ function pointInTriangle(px, py, x1, y1, x2, y2, x3, y3) {
   return area1 + area2 + area3 === areaOrig;
 }
 
+// Using ray casting
 function pointInPolygon(px, py, vertices) {
   let inside = false;
   for (let i = 0, j = vertices.length-1; i < vertices.length; j = i++) {

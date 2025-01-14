@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <TopToolbar fileName={fileName} onFileOpen={(file, text) => handleFileOpen(file, text)} />
+      <TopToolbar fileName={fileName} onFileOpen={handleFileOpen} />
       <div className="content-area">
         <LeftMenu 
           onFileOpen={handleFileOpen} 

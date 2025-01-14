@@ -6,6 +6,7 @@ function WebGLViewport({ shapes }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    // Get web gl context
     const gl = canvas.getContext('webgl');
     if (!gl) {
       console.error('WebGL not supported');
@@ -19,17 +20,21 @@ function WebGLViewport({ shapes }) {
 
     // Clearing the canvas
     gl.clearColor(1, 1, 1, 1);
+    // Color the screen
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     const program = initWebGLProgram(gl);
     gl.useProgram(program);
 
+    // Get triangulated data for all the shapes
     const vertices = createVertexData(shapes);
 
+    // Creating buffer
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-
+    
+    // Getting location of the attributes
     const a_position = gl.getAttribLocation(program, 'a_position');
     const a_color = gl.getAttribLocation(program, 'a_color');
 
@@ -38,21 +43,21 @@ function WebGLViewport({ shapes }) {
     gl.enableVertexAttribArray(a_position);
     gl.vertexAttribPointer(
       a_position,
-      2,
+      2, // 2 elements per vertex
       gl.FLOAT,
-      false,
-      stride,
-      0
+      false, // Not normalized
+      stride, // X, y and 3 for color so 5 * float size
+      0 // no offset
     );
 
     gl.enableVertexAttribArray(a_color);
     gl.vertexAttribPointer(
       a_color,
-      3,
+      3, // 3 elements in color
       gl.FLOAT,
       false,
-      stride,
-      2 * Float32Array.BYTES_PER_ELEMENT
+      stride, // X, y and 3 for color so 5 * float size
+      2 * Float32Array.BYTES_PER_ELEMENT //offset
     );
 
     const u_matrix = gl.getUniformLocation(program, "u_matrix");
@@ -60,6 +65,7 @@ function WebGLViewport({ shapes }) {
     gl.uniformMatrix3fv(u_matrix, false, matrix);
 
     const vertexCount = vertices.length / 5;
+    // Drawing the shapes
     gl.drawArrays(gl.TRIANGLES, 0, vertexCount);
 
     return () => {
@@ -94,14 +100,16 @@ function initWebGLProgram(gl) {
     }
   `;
 
+  // Create and compile shaders
   const vs = compileShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
   const fs = compileShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
 
+  // Creating the program using the shaders
   const program = gl.createProgram();
   gl.attachShader(program, vs);
   gl.attachShader(program, fs);
   gl.linkProgram(program);
-
+  // Checking error in linking program
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
     console.error('Program failed to link:', gl.getProgramInfoLog(program));
   }
@@ -109,10 +117,12 @@ function initWebGLProgram(gl) {
   return program;
 }
 
+// Creates shader and compiles
 function compileShader(gl, type, source) {
   const shader = gl.createShader(type);
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
+  // Using compile status to check for errors
   if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)){
     console.error('Shader compile failed:', gl.getShaderInfoLog(shader));
   }
@@ -134,6 +144,7 @@ function hexToRGB(hex) {
   return [r,g,b];
 }
 
+// Breaking into Triangles
 function rectToTriangles(shape) {
   const { x, y, width, height } = shape;
   return [
@@ -142,12 +153,14 @@ function rectToTriangles(shape) {
   ];
 }
 
+// Separating points in Triangle vertices 
 function triangleToTriangles(shape) {
   return [
     [ {x:shape.x1,y:shape.y1}, {x:shape.x2,y:shape.y2}, {x:shape.x3,y:shape.y3} ]
   ];
 }
 
+// Using earcut to convert polygon to triangle
 function polygonToTriangles(shape) {
   const coords = [];
   for (const v of shape.vertices) {
